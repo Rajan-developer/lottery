@@ -1,4 +1,4 @@
-package com.crupee.apitest.controller.core;
+package com.crupee.lottery.controller.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;

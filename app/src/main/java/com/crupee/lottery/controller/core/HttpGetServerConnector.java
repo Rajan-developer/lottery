@@ -1,4 +1,4 @@
-package com.crupee.apitest.controller.core;
+package com.crupee.lottery.controller.core;
 
 
 import android.util.Log;
@@ -7,10 +7,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Created by lokex on 12/23/14.

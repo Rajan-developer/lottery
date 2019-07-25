@@ -1,4 +1,4 @@
-package com.crupee.apitest;
+package com.crupee.lottery;
 
 import org.junit.Test;
 

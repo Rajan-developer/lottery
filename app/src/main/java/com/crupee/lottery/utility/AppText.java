@@ -1,4 +1,4 @@
-package com.crupee.apitest.utility;
+package com.crupee.lottery.utility;
 
 public class AppText {
 
