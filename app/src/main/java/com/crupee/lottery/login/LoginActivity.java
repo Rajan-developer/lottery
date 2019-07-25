@@ -99,11 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             showCustomViewSnackbar("password is required", "error");
             check = false;
 
-        } else if (re_password.getText().toString().isEmpty()) {
-            re_password.setError("Required");
-            showCustomViewSnackbar("Confirm password is required", "error");
-            check = false;
-        } else {
+        }  else {
             check = true;
         }
 
@@ -161,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     showProgressDialog(false);
-                    e.printStackTrace();git
+                    e.printStackTrace();
                 }
 
             }
