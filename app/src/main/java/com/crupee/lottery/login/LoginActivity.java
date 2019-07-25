@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.emailAddress);
         password = (EditText) findViewById(R.id.password);
-        re_password = (EditText) findViewById(R.id.repassword);
+//        re_password = (EditText) findViewById(R.id.repassword);
         login = (RelativeLayout) findViewById(R.id.login);
 
         //check if the user has logged in before or not
@@ -81,13 +81,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 //check if the input field is empty
                 if (checkEmpty()) {
-
+                    CallingLoginAPI(email.getText().toString(), password.getText().toString());
                     //check if the password and confirm password  matched
-                    if (password.getText().toString().equals(re_password.getText().toString())) {
-                        CallingLoginAPI(email.getText().toString(), password.getText().toString());
-                    } else {
-                        showCustomViewSnackbar("Password doesnot matched", "error");
-                    }
+//                    if (password.getText().toString().equals(re_password.getText().toString())) {
+//                        CallingLoginAPI(email.getText().toString(), password.getText().toString());
+//                    } else {
+//                        showCustomViewSnackbar("Password doesnot matched", "error");
+//                    }
                 }
             }
         });
@@ -106,11 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             showCustomViewSnackbar("password is required", "error");
             check = false;
 
-        } else if (re_password.getText().toString().isEmpty()) {
-            re_password.setError("Required");
-            showCustomViewSnackbar("Confirm password is required", "error");
-            check = false;
-        } else {
+        }  else {
             check = true;
         }
 
