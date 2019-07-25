@@ -1,9 +1,9 @@
-package com.crupee.apitest.controller.core;
+package com.crupee.lottery.controller.core;
 
 import android.app.Activity;
 import android.content.Context;
 
-import com.crupee.apitest.controller.LoginHelper;
+import com.crupee.lottery.controller.LoginHelper;
 
 
 /**

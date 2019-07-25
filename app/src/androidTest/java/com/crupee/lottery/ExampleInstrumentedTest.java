@@ -1,4 +1,4 @@
-package com.crupee.apitest;
+package com.crupee.lottery;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

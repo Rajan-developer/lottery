@@ -1,4 +1,4 @@
-package com.crupee.apitest.controller.core;
+package com.crupee.lottery.controller.core;
 
 /**
  * Created by lokex on 12/23/14.

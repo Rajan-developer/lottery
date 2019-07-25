@@ -1,4 +1,4 @@
-package com.crupee.apitest;
+package com.crupee.lottery;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

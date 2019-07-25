@@ -1,16 +1,11 @@
-package com.crupee.apitest.controller;
+package com.crupee.lottery.controller;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.LoginFilter;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.crupee.apitest.controller.core.HttpTaskListener;
-import com.crupee.apitest.controller.core.ParserFamily;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.crupee.lottery.controller.core.HttpTaskListener;
+import com.crupee.lottery.controller.core.ParserFamily;
 
 /**
  * Created by Rajan Shrestha on 8/21/2017.
