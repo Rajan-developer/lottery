@@ -1,9 +1,11 @@
 package com.crupee.lottery.login;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.crupee.lottery.MainActivity;
 import com.crupee.lottery.R;
 import com.crupee.lottery.controller.core.FailureReason;
 import com.crupee.lottery.controller.core.HttpTaskListener;
@@ -24,7 +25,9 @@ import com.crupee.lottery.controller.core.ParserFactory;
 import com.crupee.lottery.controller.core.ParserFamily;
 import com.crupee.lottery.controller.core.ServerConnectorDTO;
 import com.crupee.lottery.controller.core.ServerTask;
+import com.crupee.lottery.dashboard.activity.MainActivity;
 import com.crupee.lottery.utility.AppText;
+import com.crupee.lottery.utility.PrefUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +55,18 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         re_password = (EditText) findViewById(R.id.repassword);
         login = (RelativeLayout) findViewById(R.id.login);
+
+        //check if the user has logged in before or not
+        /*
+         *if yes the move directly to main activity
+         *if no login using credentials
+         */
+
+        if (PrefUtils.returnLoggedIn(LoginActivity.this)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         //click method
         clickMethod();
@@ -106,71 +121,84 @@ public class LoginActivity extends AppCompatActivity {
     private void CallingLoginAPI(String email, String password) {
 
         Map<String, String> dataObj = new HashMap<String, String>();
-        //getDeviceId(LoginActivity.this);
+        showProgressDialog(true);
 
-        try {
-            showProgressDialog(true);
+        //creating hash map objects of the data to send in the api
+        dataObj.put("email", email);
+        dataObj.put("password", password);
 
-            dataObj.put("email", email);
-            dataObj.put("password", password);
-
-
-            ParserFamily parserFamily = ParserFactory.create(LoginActivity.this, ParserFactory.ParserType.LOGIN_RESPONSE);
-            parserFamily.setParserCallBack(new HttpTaskListener() {
-                @Override
-                public void onAPiResponseObtained(int taskId, String result) {
-                    String loginResponse = result;
+        //calling login api
+        ParserFamily parserFamily = ParserFactory.create(LoginActivity.this, ParserFactory.ParserType.LOGIN_RESPONSE);
+        parserFamily.setParserCallBack(new HttpTaskListener() {
+            @Override
+            public void onAPiResponseObtained(int taskId, String result) {
+                String loginResponse = result;
 
 
-                    try {
+                try {
 
-                        JSONObject jsonObject = new JSONObject(loginResponse);
+                    JSONObject jsonObject = new JSONObject(loginResponse);
 
-                        String status = jsonObject.getString("status");
+                    String status = jsonObject.getString("status");
 
-                        if (status.equalsIgnoreCase("true")) {
-                            showProgressDialog(false);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-
-
-                    } catch (JSONException e) {
+                    if (status.equalsIgnoreCase("true")) {
                         showProgressDialog(false);
-                        e.printStackTrace();
+
+                        showCustomViewSnackbar("Loggin Successful", "success");
+
+                        //set user has logged in
+                        PrefUtils.saveloggedIn(LoginActivity.this, true);
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 1000);
+
+                    } else if (status.equalsIgnoreCase("false")) {
+                        showProgressDialog(false);
+                        String message = jsonObject.getString("message");
+                        showCustomViewSnackbar(message, "error");
                     }
 
-                }
 
-                @Override
-                public void onApiResponseFailed(int taskId, FailureReason reason, String errorMessage, String errorCode) {
-                    Log.d(TAG, "response failed::::" + reason.toString());
+                } catch (JSONException e) {
                     showProgressDialog(false);
-                    showCustomViewSnackbar(getResources().getString(R.string.cannot_login), "error");
-
-
+                    e.printStackTrace();
                 }
 
-                @Override
-                public void onTaskStarted(int taskId) {
+            }
 
-                }
+            @Override
+            public void onApiResponseFailed(int taskId, FailureReason reason, String errorMessage, String errorCode) {
+                Log.d(TAG, "response failed::::" + reason.toString());
+                showProgressDialog(false);
+                showCustomViewSnackbar(getResources().getString(R.string.cannot_login), "error");
 
-                @Override
-                public void onTaskCancelled(int taskId) {
 
-                }
-            });
-            ServerConnectorDTO connectorDTO = new ServerConnectorDTO();
-            connectorDTO.setUrlToConnect(AppText.BASE_URL + AppText.LOGIN_URL);
-            connectorDTO.setDataListNameValuePair(dataObj);
-            Log.d(TAG, "datapost:::" + dataObj.toString());
-            ServerTask serverTask = new ServerTask(parserFamily, connectorDTO);
-            serverTask.execute(ServerTask.RequestMethod.POST);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            }
+
+            @Override
+            public void onTaskStarted(int taskId) {
+
+            }
+
+            @Override
+            public void onTaskCancelled(int taskId) {
+
+            }
+        });
+        ServerConnectorDTO connectorDTO = new ServerConnectorDTO();
+        connectorDTO.setUrlToConnect(AppText.BASE_URL + AppText.LOGIN_URL);
+        connectorDTO.setDataListNameValuePair(dataObj);
+        Log.d(TAG, "datapost:::" + dataObj.toString());
+        ServerTask serverTask = new ServerTask(parserFamily, connectorDTO);
+        serverTask.execute(ServerTask.RequestMethod.POST);
+
     }
 
     private void showProgressDialog(boolean shouldShow) {
@@ -191,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private void showCustomViewSnackbar(String message, String check) {
 
 
@@ -208,10 +237,10 @@ public class LoginActivity extends AppCompatActivity {
         textView.setText(message);
 
         if (check.equalsIgnoreCase("error")) {
-            snackbarView.setBackgroundColor(Color.RED);
+            snackbarView.setBackgroundColor(this.getResources().getColor(R.color.error));
             imageView.setImageDrawable(this.getResources().getDrawable(R.drawable.custom_error));
         } else {
-            snackbarView.setBackgroundColor(Color.GREEN);
+            snackbarView.setBackgroundColor(this.getResources().getColor(R.color.success));
             imageView.setImageDrawable(this.getResources().getDrawable(R.drawable.custom_success));
         }
         snackbarView.addView(customView, 0);
