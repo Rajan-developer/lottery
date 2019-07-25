@@ -6,4 +6,21 @@
 
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+
+    <!--for navigation-->
+    <color name="transparent_black_percent_60">#99000000</color>
+
+    <!--for application-->
+    <color name="red">#ff6767</color>
+    <color name="orange">#ffb067</color>
+    <color name="green">#67ffae</color>
+    <color name="blue">#6785ff</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="lottery_bg_color">#DF082230</color>
+    <color name="qr_save_color">#11BDD6</color>
+    <color name="grey">#8D8C8C</color>
+
+    <!--Snack bar-->
+    <color name="error">#D32626</color>
+    <color name="success">#008577</color>
 </resources>

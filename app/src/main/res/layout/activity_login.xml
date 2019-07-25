@@ -1,50 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
 
-    <android.support.design.widget.TextInputLayout
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_background" />
+
+        <ImageView
+            android:id="@+id/lottery_logo"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/lottery_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lottery_logo"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:text="L&#160;O&#160;G&#160;I&#160;N"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:textCursorDrawable="@drawable/color_cursor"
-        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+        android:layout_below="@+id/top_layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/emailAddress"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/black"
-            android:textColorHint="@color/colorPrimary"
-            android:textCursorDrawable="@drawable/color_cursor"></EditText>
+            android:textCursorDrawable="@drawable/color_cursor"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/emailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textColorHint="@color/colorPrimary"
+                android:textCursorDrawable="@drawable/color_cursor"></EditText>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:textCursorDrawable="@drawable/color_cursor"
-        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textColor="@color/black"
-            android:textColorHint="@color/colorPrimary"
-            android:textCursorDrawable="@drawable/color_cursor"></EditText>
-
-    </android.support.design.widget.TextInputLayout>
-
+<<<<<<< HEAD
     <!--<android.support.design.widget.TextInputLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -63,13 +79,44 @@
             <!--android:textCursorDrawable="@drawable/color_cursor"></EditText>-->
 
     <!--</android.support.design.widget.TextInputLayout>-->
+=======
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/colorPrimary"
+                android:textCursorDrawable="@drawable/color_cursor"></EditText>
+
+        </android.support.design.widget.TextInputLayout>
+>>>>>>> 7613d55fafd5e61c812fac3bf8d7abde1d8bf842
+
+
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/green_circular_corner_rectangle">
 
         <TextView
@@ -82,4 +129,5 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

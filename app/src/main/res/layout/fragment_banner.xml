@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitXY"
+        android:id="@+id/bannerImageView" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarBannerImage"
+        android:layout_gravity="center"
+        />
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nepal&apos;s No1 telecom company"
+        android:textColor="@color/white"
+        android:id="@+id/tv_banner_text"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="50dp"
+        android:background="@color/blackTransparent"
+        android:padding="10dp"
+        android:gravity="center"
+        />-->
+</FrameLayout>

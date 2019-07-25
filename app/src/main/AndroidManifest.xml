@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.crupee.lottery.MainActivity"></activity>
+        <activity android:name=".dashboard.activity.MainActivity"></activity>
     </application>
 
 </manifest>
