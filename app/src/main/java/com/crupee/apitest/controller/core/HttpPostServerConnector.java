@@ -22,9 +22,9 @@ public class HttpPostServerConnector {
 
     private final String TAG = HttpPostServerConnector.class.getSimpleName();
 
-     private ServerConnectorDTO serverConnectorDto;
+    private ServerConnectorDTO serverConnectorDto;
 
-    public HttpPostServerConnector(ServerConnectorDTO connector){
+    public HttpPostServerConnector(ServerConnectorDTO connector) {
 
         this.serverConnectorDto = connector;
 
@@ -74,19 +74,19 @@ public class HttpPostServerConnector {
         *//*l_connection = (HttpsURLConnection) l_url.openConnection();
         l_connection.connect();*//*
 
-        */
+         */
         Log.d(TAG, "*************CONNECTING SERVER*******");
         Log.d(TAG, "url to connect:: " + serverConnectorDto.getUrlToConnect());
 
 
-        URL url  = new URL(serverConnectorDto.getUrlToConnect());
+        URL url = new URL(serverConnectorDto.getUrlToConnect());
 
         String postData = "";
 
-        if(serverConnectorDto.getDataJsonString()!=null){
+        if (serverConnectorDto.getDataJsonString() != null) {
 
             postData = serverConnectorDto.getDataJsonString();
-        }else{
+        } else {
             postData = WebUtil.getParams(serverConnectorDto.getDataListNameValuePair());
         }
 
@@ -94,27 +94,27 @@ public class HttpPostServerConnector {
 
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
-        HttpsURLConnection conn= (HttpsURLConnection) url.openConnection();
-        //HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-        conn.setDoOutput( true );
-        conn.setInstanceFollowRedirects( false );
-        conn.setRequestMethod( "POST" );
-       // conn.setRequestProperty( "Content-Type", "application/json");
-       conn.setRequestProperty( "Accept", "application/json");
+        //HttpsURLConnection conn= (HttpsURLConnection) url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setInstanceFollowRedirects(false);
+        conn.setRequestMethod("POST");
+        // conn.setRequestProperty( "Content-Type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("charset", "utf-8");
         conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setUseCaches(false);
 
         try {
-            DataOutputStream wr = new DataOutputStream( conn.getOutputStream());
-            wr.write( postDataBytes );
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.write(postDataBytes);
             wr.flush();
             wr.close();
 
             int responseCode = conn.getResponseCode();
-            Log.d(TAG,"response code::"+responseCode);
+            Log.d(TAG, "response code::" + responseCode);
 
-            if(responseCode==201){
+            if (responseCode == 201) {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(conn.getInputStream()));
                 String inputLine;
@@ -125,13 +125,13 @@ public class HttpPostServerConnector {
                 }
                 in.close();
 
-                Log.d(TAG,"response from server::"+response);
+                Log.d(TAG, "response from server::" + response);
 
                 return response.toString();
 
             }
 
-            if(responseCode==200){
+            if (responseCode == 200) {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(conn.getInputStream()));
                 String inputLine;
@@ -142,7 +142,7 @@ public class HttpPostServerConnector {
                 }
                 in.close();
 
-                Log.d(TAG,"response from server::"+response);
+                Log.d(TAG, "response from server::" + response);
 
                 return response.toString();
 
@@ -159,19 +159,18 @@ public class HttpPostServerConnector {
                 in.close();
 
                 //print result
-                Log.d(TAG, "server response:: "+response.toString());
+                Log.d(TAG, "server response:: " + response.toString());
 
                 return response.toString();
-            }else{
-                Log.d(TAG,"Ignoring the connection since response code is not 200");
+            } else {
+                Log.d(TAG, "Ignoring the connection since response code is not 200");
                 return "";
             }
 
-        }catch (Exception e){
-                e.printStackTrace();
-                return "";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
         }
-
 
 
     }

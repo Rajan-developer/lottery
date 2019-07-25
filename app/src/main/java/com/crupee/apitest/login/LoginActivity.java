@@ -1,6 +1,7 @@
 package com.crupee.apitest.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crupee.apitest.MainActivity;
 import com.crupee.apitest.R;
 import com.crupee.apitest.controller.core.FailureReason;
 import com.crupee.apitest.controller.core.HttpTaskListener;
@@ -103,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         return check;
     }
 
-    private void CallingLoginAPI(final String email, final String password) {
+    private void CallingLoginAPI(String email, String password) {
 
         Map<String, String> dataObj = new HashMap<String, String>();
         //getDeviceId(LoginActivity.this);
@@ -111,11 +113,9 @@ public class LoginActivity extends AppCompatActivity {
         try {
             showProgressDialog(true);
 
-            /*dataObj.put("username", name);
+            dataObj.put("email", email);
             dataObj.put("password", password);
-            dataObj.put("deviceid", deviceId);
-            Log.d(TAG, "Language Type::::" + PrefUtils.returnlanguageRef(LoginActivity.this));
-            dataObj.put("lang_type", PrefUtils.returnlanguageRef(LoginActivity.this));*/
+
 
             ParserFamily parserFamily = ParserFactory.create(LoginActivity.this, ParserFactory.ParserType.LOGIN_RESPONSE);
             parserFamily.setParserCallBack(new HttpTaskListener() {
@@ -129,6 +129,13 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(loginResponse);
 
                         String status = jsonObject.getString("status");
+
+                        if (status.equalsIgnoreCase("true")) {
+                            showProgressDialog(false);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
 
 
                     } catch (JSONException e) {
@@ -212,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
         snackbarView.addView(customView, 0);
 
 
-        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)customView.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) customView.getLayoutParams();
         params.gravity = Gravity.TOP;
         customView.setLayoutParams(params);
 
