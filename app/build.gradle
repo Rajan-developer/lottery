@@ -35,4 +35,15 @@ dependencies {
 
     //for QR code generating
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+
+    /*for gif imageview*/
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.5'
+
+    /*for pdf file opening*/
+    implementation 'com.itextpdf:itextg:5.5.10'
+
+    //for round corner imageView
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    //for circular imageview
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }

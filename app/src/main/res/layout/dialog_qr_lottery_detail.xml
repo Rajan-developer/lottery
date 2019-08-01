@@ -44,7 +44,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
-                    android:text="Category Title"
+                    android:text="@string/category_title"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -76,16 +76,16 @@
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="save"
+                    android:text="@string/save"
                     android:textColor="@color/white" />
 
             </LinearLayout>
 
 
-           <!-- <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />-->
+            <!-- <ImageView
+                 android:id="@+id/imageView"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" />-->
 
         </LinearLayout>
 

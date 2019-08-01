@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">खुशी \n लटरी</string>
+
+    <!--  activity_login  -->
+    <string name="email">ईमेल</string>
+    <string name="password">पासवर्ड</string>
+    <string name="login">लगइन</string>
+
+    <!--  LoginActivity  -->
+    <string name="required">Required</string>
+    <string name="required_email">ईमेल लेख्नुहोस्</string>
+    <string name="required_password">पासवर्ड लेख्नुहोस्</string>
+    <string name="login_successful">लगइन सफल</string>
+    <string name="cannot_login">लगइन असफल</string>
+
+    <string name="loading">Loading........</string>
+    <string name="no_internet">इन्टरनेट जडान छैन !!!</string>
+    <string name="invalid_email">सहि ईमेल लेख्नुहोस्</string>
+
+    <!--  dialog_qr_lottery_detail -->
+    <string name="category_title">कतेगोरी ताईतल</string>
+    <string name="save">सेभ</string>
+
+    <!-- dialog_select_lottery_number  -->
+    <string name="lottery_number">लटरी नम्बर :</string>
+    <string name="select_number">सेलेक्त नम्बर : </string>
+
+    <!--  home fragment  -->
+    <string name="rs">RS</string>
+    <string name="want_to_buy">थप टिकट किन्न ?</string>
+    <string name="print_ticket">पृन्त  टिकट ? </string>
+
+    <!--  lottry_item-->
+    <string name="quick_pick">Quick Pick</string>
+    <string name="cancel">Cancel</string>
+
+    <!--  HomeFragment -->
+    <string name="no_lottery_available">पृन्त गर्न लटरी उपलब्ध छैन</string>
+
+
+    <!--   main_menu -->
+    <string name="language">भाषा</string>
+    <string name="logout">लग आउत</string>
+
+
+    <!-- activity_setting -->
+    <string name="setting">सेतीङ</string>
+    <string name="user_detail">युजर इन्फोमेसन</string>
+    <string name="profile">प्रोफाइल</string>
+    <string name="select_language">भाषा छनोट गर्नुहोस्</string>
+    <string name="remove_account">अकाउन्ट हटाउनुहोस्</string>
+
+    <!--logout dialog strings-->
+    <string name="logout_dialog_message">साच्चै, तपाईं यस अकाउन्टबाट लग आउट गर्न चाहनुहुन्छ?</string>
+    <string name="no">होईन</string>
+    <string name="yes">हो</string>
+
+    <!--  activity_settinglanguage -->
+    <string name="english_language">अंग्रेजी</string>
+    <string name="nepali_language">नेपाली</string>
+
+    <!--  dialog_profile-->
+    <string name="user_name">नाम : </string>
+    <string name="user_email">ईमेल : </string>
+
+
+</resources>

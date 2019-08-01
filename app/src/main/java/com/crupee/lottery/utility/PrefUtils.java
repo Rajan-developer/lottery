@@ -13,8 +13,18 @@ import java.util.ArrayList;
 public class PrefUtils {
 
     public static final String SHARED_PREF_KHUSHILOTTERY = "khushi_lottery";
-    public static final String USER_DETAIL = "user_detail";
+
+
     public static final String IS_LOGIN = "is_login";
+
+    public static final String USER_ID = "user_id";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_TOKEN = "user_token";
+
+    public static final String IS_LANGUAGE_SELECTED = "is_language_selected";
+    public static final String SELECTED_LANGUAGE = "selected_language";
+    public static final String LANGUAGE_REF = "language_ref";
 
     public static String SAVED_LOTTERY_LIST = "saved_lottery_list";
     public static String SELECTED_LOTTERY_NUMBER = "selected_lottery_number";
@@ -22,17 +32,27 @@ public class PrefUtils {
 
     public static final String WALLET_PASSWORD = "wallet_password";
 
-    public static void saveUserDetail(Context context, String userdetail) {
+    /*--- ---- ---- Login --- ---- ----*/
+
+    public static void saveUserDetail(Context context, String id, String name, String email, String token) {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(USER_DETAIL, userdetail);
+        editor.putString(USER_ID, id);
+        editor.putString(USER_NAME, name);
+        editor.putString(USER_EMAIL, email);
+        editor.putString(USER_TOKEN, token);
         editor.commit();
     }
 
 
-    public static String returnUserDetail(Context context) {
+    public static String returnUserName(Context context) {
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
-        return pref.getString(USER_DETAIL, "");
+        return pref.getString(USER_NAME, "");
+    }
+
+    public static String returnUserEmail(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
+        return pref.getString(USER_EMAIL, "");
     }
 
     public static void saveloggedIn(Context context, boolean loginIn) {
@@ -48,6 +68,30 @@ public class PrefUtils {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
+    /* ----- ---- ---- languages -- ---- ----- */
+
+    public static void saveLanguage(Context context, Boolean language, String selectedlanguage, String language_ref) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(IS_LANGUAGE_SELECTED, language);
+        editor.putString(SELECTED_LANGUAGE, selectedlanguage);
+        editor.putString(LANGUAGE_REF, language_ref);
+        editor.commit();
+    }
+
+
+    public static Boolean isLanguageSelected(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
+        return prefs.getBoolean(IS_LANGUAGE_SELECTED, true);
+    }
+
+    public static String returnlanguageSelected(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
+        return prefs.getString(SELECTED_LANGUAGE, "en");
+    }
+
+
+    /*--- ---- --- save lottery list --- ---- -----*/
 
     public static void saveLotteryList(Context context, ArrayList<LotteryDTO> list, String key) {
         removeList(context, key);
@@ -109,4 +153,13 @@ public class PrefUtils {
         return gson.fromJson(json, type);
 
     }
+
+
+    public static void Logout(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 }

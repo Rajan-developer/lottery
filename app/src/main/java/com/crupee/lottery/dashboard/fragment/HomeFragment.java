@@ -1,12 +1,19 @@
 package com.crupee.lottery.dashboard.fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,14 +33,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crupee.lottery.R;
+import com.crupee.lottery.dashboard.activity.MainActivity;
 import com.crupee.lottery.dashboard.adapter.LotteryDialogRecyclerViewAdapter;
 import com.crupee.lottery.dashboard.adapter.LotteryListRecyclerView;
 import com.crupee.lottery.dashboard.model.LotteryDTO;
 import com.crupee.lottery.utility.PrefUtils;
 import com.crupee.lottery.utility.Screenshot;
 import com.google.zxing.WriterException;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -68,10 +87,30 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+//        PrefUtils.saveLanguage(getContext(), true, "en", "1");
+//        PrefUtils.saveLanguage(getContext(), true, "ne", "2");
+//        PrefUtils.saveLanguage(getContext(), true, "ko", "3");
+
+        if (PrefUtils.isLanguageSelected(getContext())) {
+
+            String language = PrefUtils.returnlanguageSelected(getContext());
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+
+            Resources res = getResources();
+            Configuration config = new Configuration(res.getConfiguration());
+            config.locale = locale;
+            config.setLocale(locale);
+            config.setLayoutDirection(locale);
+            res.updateConfiguration(config, res.getDisplayMetrics());
+        }
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -125,11 +164,11 @@ public class HomeFragment extends Fragment {
                         // generateQRCode(adapter.returnLotteryList());
                         showLotteryListDialog(PrefUtils.returnLotteryList(getContext(), "lotterykey"));
                     } else {
-                        Toast.makeText(getContext(), "No lottery available to print", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getResources().getString(R.string.no_lottery_available), Toast.LENGTH_SHORT).show();
                     }
                 } catch (NullPointerException e) {
 
-                    Toast.makeText(getContext(), "No lottery available to print", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getResources().getString(R.string.no_lottery_available), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -195,8 +234,66 @@ public class HomeFragment extends Fragment {
 //                Screenshot.saveTempBitmap(b, getContext());
 
                 Bitmap b = Screenshot.finalcombieimage(b1, b2, getContext());
-                Screenshot.saveTempBitmap(b, getContext());
+                String path = Screenshot.saveTempBitmap(b, getContext());
                 //imageView.setImageBitmap(b);
+
+
+                //saving the image as a pdf and open the pdf fron pdf viewer
+                try {
+
+                    Document document = new Document();
+
+                    String setDirectoryName = "Khushilottery";
+                    File root = new File(Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                            setDirectoryName);
+
+                    final File myDir = new File(root + "/lottery_images_pdf");
+                    myDir.mkdirs();
+
+                    final String fname = "example.pdf";
+
+                    //Log.d("Home Fragment : ", "file path " + myDir);
+                    // Toast.makeText(mContext, "Image saved to " + myDir, Toast.LENGTH_SHORT).show();
+                    File file = new File(myDir, fname);
+
+                    //String directoryPath = android.os.Environment.getExternalStorageDirectory().toString();
+
+                    PdfWriter.getInstance(document, new FileOutputStream(file)); //  Change pdf's name.
+
+                    document.open();
+
+                    Image image = Image.getInstance(path);  // Change image's name and extension.
+
+                    float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+                            - document.rightMargin() - 0) / image.getWidth()) * 100; // 0 means you have no indentation. If you have any, change it.
+                    image.scalePercent(scaler);
+                    image.setAlignment(Image.ALIGN_CENTER | Image.ALIGN_TOP);
+
+                    document.add(image);
+                    document.close();
+
+
+                    // opening the pdf file of the pdf generated above
+                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                    StrictMode.setVmPolicy(builder.build());
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (BadElementException e) {
+                    e.printStackTrace();
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

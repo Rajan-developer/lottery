@@ -33,16 +33,19 @@ public class Screenshot {
         return takescreenshot(v.getRootView());
     }
 
-    public static void saveTempBitmap(Bitmap bitmap, Context mContext) {
+    public static String saveTempBitmap(Bitmap bitmap, Context mContext) {
 
+        String path = null;
         if (isExternalStorageWritable()) {
-            saveImage(bitmap, mContext);
+            path = saveImage(bitmap, mContext);
         } else {
             //prompt the user or do something
         }
+
+        return path;
     }
 
-    private static void saveImage(Bitmap finalBitmap, Context mContext) {
+    private static String saveImage(Bitmap finalBitmap, Context mContext) {
 
         String folderName = "Khushilottery";
         String setDirectoryName = "Khushilottery";
@@ -70,6 +73,8 @@ public class Screenshot {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return myDir + "/" + fname;
     }
 
     /* Checks if external storage is available for read and write */

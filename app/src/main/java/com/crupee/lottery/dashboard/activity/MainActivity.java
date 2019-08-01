@@ -2,6 +2,8 @@ package com.crupee.lottery.dashboard.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,7 +13,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.View;
+import android.widget.Toast;
+
 import com.crupee.lottery.R;
 import com.crupee.lottery.dashboard.custom_navigation.MenuItem;
 import com.crupee.lottery.dashboard.custom_navigation.SNavigationDrawer;
@@ -19,10 +24,12 @@ import com.crupee.lottery.dashboard.fragment.AboutusFragment;
 import com.crupee.lottery.dashboard.fragment.BlogFragment;
 import com.crupee.lottery.dashboard.fragment.ContactusFragment;
 import com.crupee.lottery.dashboard.fragment.HomeFragment;
+import com.crupee.lottery.login.LoginActivity;
 import com.crupee.lottery.utility.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +49,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        PrefUtils.saveLanguage(MainActivity.this, true, "en", "1");
+//        PrefUtils.saveLanguage(MainActivity.this, true, "ne", "2");
+//        PrefUtils.saveLanguage(MainActivity.this, true, "ko", "3");
+
+        if (PrefUtils.isLanguageSelected(MainActivity.this)) {
+
+            String language = PrefUtils.returnlanguageSelected(MainActivity.this);
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+
+            Resources res = getResources();
+            Configuration config = new Configuration(res.getConfiguration());
+            config.locale = locale;
+            config.setLocale(locale);
+            config.setLayoutDirection(locale);
+            res.updateConfiguration(config, res.getDisplayMetrics());
+        }
+
         setContentView(R.layout.activity_main);
 
         /*clear the previous lottery list from preference*/
@@ -145,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        registerForContextMenu(SNavigationDrawer.menuSetting);
+
 
     }
 
@@ -197,6 +225,30 @@ public class MainActivity extends AppCompatActivity {
 
         PrefUtils.clearLotteryList(MainActivity.this);
         finish();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Choose your option");
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.language:
+                Toast.makeText(this, "Option 1 selected", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.logout:
+                Toast.makeText(this, "Option 2 selected", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+
     }
 
 }
