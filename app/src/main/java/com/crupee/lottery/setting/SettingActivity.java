@@ -5,15 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -24,11 +21,9 @@ import android.widget.TextView;
 
 import com.crupee.lottery.R;
 import com.crupee.lottery.dashboard.activity.MainActivity;
-import com.crupee.lottery.dashboard.adapter.LotteryDialogRecyclerViewAdapter;
 import com.crupee.lottery.login.LoginActivity;
+import com.crupee.lottery.splash.SplashActivity;
 import com.crupee.lottery.utility.PrefUtils;
-
-import org.w3c.dom.Text;
 
 import java.util.Locale;
 
@@ -178,11 +173,10 @@ public class SettingActivity extends AppCompatActivity {
 
     private void processLogout() {
         PrefUtils.Logout(SettingActivity.this);
-        Intent splashIntent = new Intent(SettingActivity.this, LoginActivity.class);
+        Intent splashIntent = new Intent(SettingActivity.this, SplashActivity.class);
         splashIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(splashIntent);
         finish();
-
     }
 
 

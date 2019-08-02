@@ -63,5 +63,8 @@
     <string name="user_name">Name : </string>
     <string name="user_email">Email : </string>
 
+    <!--  bottom_sheet_splash_language  -->
+    <string name="choose_language">Hey, choose your language for application</string>
+
 
 </resources>

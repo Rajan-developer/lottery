@@ -65,5 +65,8 @@
     <string name="user_name">नाम : </string>
     <string name="user_email">ईमेल : </string>
 
+    <!--  bottom_sheet_splash_language  -->
+    <string name="choose_language">अप्लीकेसन को लागी भाषा छान्नुहोस्</string>
+
 
 </resources>

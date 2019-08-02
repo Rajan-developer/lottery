@@ -82,7 +82,7 @@ public class PrefUtils {
 
     public static Boolean isLanguageSelected(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_KHUSHILOTTERY, Context.MODE_PRIVATE);
-        return prefs.getBoolean(IS_LANGUAGE_SELECTED, true);
+        return prefs.getBoolean(IS_LANGUAGE_SELECTED, false);
     }
 
     public static String returnlanguageSelected(Context context) {
